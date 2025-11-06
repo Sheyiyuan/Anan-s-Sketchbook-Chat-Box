@@ -124,10 +124,9 @@ def draw_text_auto(
         font = _load_font(best_size)
 
     # --- 6. 解析着色片段 ---
-    def parse_color_segments(s: str) -> list[tuple[str, Tuple[int, int, int]]]:
+    def parse_color_segments(s: str,in_bracket: bool) -> Tuple[list[tuple[str, Tuple[int, int, int]]],bool]:
         segs: list[tuple[str, Tuple[int, int, int]]] = []
         buf = ""
-        in_bracket = False
         for ch in s:
             if ch == "[" or ch == "【":
                 if buf:
@@ -145,7 +144,7 @@ def draw_text_auto(
                 buf += ch
         if buf:
             segs.append((buf, bracket_color if in_bracket else color))
-        return segs
+        return segs,in_bracket
 
     # --- 7. 垂直对齐 ---
     if valign == "top":
@@ -157,6 +156,7 @@ def draw_text_auto(
 
     # --- 8. 绘制 ---
     y = y_start
+    in_bracket = False
     for ln in best_lines:
         line_w = int(draw.textlength(ln, font=font))
         if align == "left":
@@ -165,8 +165,8 @@ def draw_text_auto(
             x = x1 + (region_w - line_w) // 2
         else:
             x = x2 - line_w
-
-        for seg_text, seg_color in parse_color_segments(ln):
+        segments,in_bracket = parse_color_segments(ln,in_bracket)
+        for seg_text, seg_color in segments:
             if seg_text:
                 draw.text((x, y), seg_text, font=font, fill=seg_color)
                 x += int(draw.textlength(seg_text, font=font))
