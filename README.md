@@ -25,3 +25,6 @@
 如果发送失败等可以尝试适当增大`main.py`第10行的`DELAY`
 
 详细教程: https://www.bilibili.com/opus/1131995010930049048
+
+## 另外的分支
+[增加了表情差分功能的分支, 暂不支持图片的插入](https://github.com/WrightHua/Anan-s-Sketchbook-Chat-Box/tree/main)
