@@ -52,3 +52,30 @@
 > 此处 Windows 的测试环境为 Null
 
 理论上是支持 Windows 的，但是我因为没有环境所以没有测试过，建议去用原项目，更新比这边快而且适配更好。
+
+## 下载后完整使用教程（含 uv 和虚拟环境使用）
+
+- 安装uv
+
+```zsh
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+- 通过 uv 安装 python 并启用虚拟环境
+
+```zsh
+uv venv --python 3.13 .venv
+```
+
+- 安装依赖
+
+```zsh
+uv pip install -r requirements.txt
+```
+
+- 运行
+
+```zsh
+sudo uv run main.py
+```
+
