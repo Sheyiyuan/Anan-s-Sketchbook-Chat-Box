@@ -9,10 +9,11 @@ import win32gui
 import win32process
 import psutil
 from typing import Optional, Tuple
-from config import DELAY, FONT_FILE, BASEIMAGE_FILE, AUTO_SEND_IMAGE, AUTO_PASTE_IMAGE, BLOCK_HOTKEY, HOTKEY, SEND_HOTKEY,PASTE_HOTKEY,CUT_HOTKEY,SELECT_ALL_HOTKEY,TEXT_BOX_TOPLEFT,IMAGE_BOX_BOTTOMRIGHT,BASE_OVERLAY_FILE,USE_BASE_OVERLAY, ALLOWED_PROCESSES
+from config import DELAY, FONT_FILE,BASEIMAGE_MAPPING,BASEIMAGE_FILE, AUTO_SEND_IMAGE, AUTO_PASTE_IMAGE, BLOCK_HOTKEY, HOTKEY, SEND_HOTKEY,PASTE_HOTKEY,CUT_HOTKEY,SELECT_ALL_HOTKEY,TEXT_BOX_TOPLEFT,IMAGE_BOX_BOTTOMRIGHT,BASE_OVERLAY_FILE,USE_BASE_OVERLAY, ALLOWED_PROCESSES
 
 from text_fit_draw import draw_text_auto
 from image_fit_paste import paste_image_auto
+current_image_file = BASEIMAGE_FILE
 
 def get_foreground_window_process_name():
     """
@@ -90,6 +91,7 @@ def try_get_image() -> Optional[Image.Image]:
     return None
 
 def Start():
+    global  current_image_file#保存上次使用差分
     # 检查是否设置了允许的进程列表，如果设置了，则检查当前进程是否在允许列表中
     if ALLOWED_PROCESSES:
         current_process = get_foreground_window_process_name()
@@ -116,7 +118,7 @@ def Start():
 
         try:
             png_bytes = paste_image_auto(
-                image_source=BASEIMAGE_FILE,
+                image_source=current_image_file,
                 image_overlay= BASE_OVERLAY_FILE if USE_BASE_OVERLAY else None,
                 top_left=TEXT_BOX_TOPLEFT,
                 bottom_right=IMAGE_BOX_BOTTOMRIGHT,
@@ -133,10 +135,17 @@ def Start():
     
     elif text != "":
         print("Get text: "+text)
-
+        
+     # 查找发送内容是否包含更换差分指令#差分名#，如果有则更换差分并移除关键字
+        for keyword, img_file in BASEIMAGE_MAPPING.items():
+            if keyword in text:
+                current_image_file = img_file
+                text = text.replace(keyword, "").strip()
+                print(f"检测到关键词 '{keyword}'，使用底图: {current_image_file}")
+                break
         try:
             png_bytes = draw_text_auto(
-                image_source=BASEIMAGE_FILE,
+                image_source=current_image_file,
                 image_overlay= BASE_OVERLAY_FILE if USE_BASE_OVERLAY else None,
                 top_left=TEXT_BOX_TOPLEFT,
                 bottom_right=IMAGE_BOX_BOTTOMRIGHT,
