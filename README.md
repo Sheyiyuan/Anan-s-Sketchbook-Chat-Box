@@ -1,18 +1,18 @@
-# 安安的素描本聊天框
+# 安安的素描本聊天框（MacOS 和 Linux 版本）
 
 本项目是一个将你在一个文本输入框中的文字或图片写到安安的素描本上的项目。
 
-这个项目是 [原项目](https://github.com/MarkCup-Official/Anan-s-Sketchbook-Chat-Box) 的 MacOS 支持版本，随缘更新，不保证功能和原项目同步。
+这个项目是 [原项目](https://github.com/MarkCup-Official/Anan-s-Sketchbook-Chat-Box) 的 MacOS 和 Linux 支持版本，随缘更新，不保证功能和原项目同步。
 
 ## AI声明
 
-本项目 90% 的代码由AI生成（在加上 MacOS 适配后浓度可能更高了）
+本项目基本上你看得到的的代码都由AI生成
 
 ## 部署
 
-本项目支持仅 MacOS 和 Linux 系统。
+本项目支持 MacOS 和 Linux 系统。
 
-理论上支持 Windows 系统，但是我只有理论。
+理论上支持 Windows 系统，但是我只有理论，没有任何测试的同时功能更新慢，不推荐使用。
 
 本项目不提供字体文件和安安图片，需要你自己想办法加进来，分别命名为 `font.ttf`，`base.png` 和 `base_overlay.png`。
 其中 `font.ttf` 为字体文件，`base.png`为安安拿素描本的照片，`base_overlay.png` 为透明底的安安袖子, 用于防止文字和图片覆盖在袖子上方.
