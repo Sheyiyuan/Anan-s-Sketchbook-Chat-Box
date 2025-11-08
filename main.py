@@ -1,6 +1,6 @@
-import time
 import pyperclip
 import platform
+import time  # 添加time模块导入
 
 # 导入操作系统适配器
 from os_adapters import os_adapter
@@ -23,6 +23,14 @@ if current_os == 'Darwin':
     CUT_HOTKEY = os_adapter.adapt_hotkey_for_macos(CUT_HOTKEY)
     PASTE_HOTKEY = os_adapter.adapt_hotkey_for_macos(PASTE_HOTKEY)
     SEND_HOTKEY = os_adapter.adapt_hotkey_for_macos(SEND_HOTKEY)
+# Linux特定的热键适配
+elif current_os == 'Linux':
+    # 在Linux上保持热键不变或进行必要的适配
+    HOTKEY = os_adapter.adapt_hotkey_for_linux(HOTKEY)
+    SELECT_ALL_HOTKEY = os_adapter.adapt_hotkey_for_linux(SELECT_ALL_HOTKEY)
+    CUT_HOTKEY = os_adapter.adapt_hotkey_for_linux(CUT_HOTKEY)
+    PASTE_HOTKEY = os_adapter.adapt_hotkey_for_linux(PASTE_HOTKEY)
+    SEND_HOTKEY = os_adapter.adapt_hotkey_for_linux(SEND_HOTKEY)
 
 
 # 使用操作系统适配器进行剪贴板操作
@@ -46,27 +54,67 @@ def cut_all_and_get_text() -> str:
     模拟全选/剪切全部文本，并返回剪切得到的内容。
     """
     # 备份原剪贴板
-    old_clip = pyperclip.paste()
+    try:
+        old_clip = pyperclip.paste()
+    except UnicodeDecodeError:
+        # 原剪贴板包含二进制数据，无法解码
+        old_clip = None
+    except Exception:
+        # 其他异常情况
+        old_clip = None
 
     # 清空剪贴板，防止读到旧数据
-    pyperclip.copy("")
+    try:
+        pyperclip.copy("")
+    except Exception:
+        pass
 
-    # 发送全选和剪切快捷键（使用跨平台函数）
-    send_keystroke(SELECT_ALL_HOTKEY)
-    send_keystroke(CUT_HOTKEY)
-    time.sleep(DELAY)
+    try:
+        # 发送全选和剪切快捷键（使用跨平台函数）
+        send_keystroke(SELECT_ALL_HOTKEY)
+        send_keystroke(CUT_HOTKEY)
+        time.sleep(DELAY)  # 确保剪切操作完成
 
-    # 获取剪切后的内容
-    new_clip = pyperclip.paste()
+        # 获取剪切后的内容，增加异常处理
+        try:
+            new_clip = pyperclip.paste()
+        except UnicodeDecodeError:
+            # 如果发生UTF-8解码错误，说明剪贴板可能包含二进制数据
+            print("剪贴板包含无法解码的二进制数据")
+            new_clip = ""
+        except Exception as e:
+            print(f"读取剪贴板内容时出错: {e}")
+            new_clip = ""
 
-    return new_clip
+        return new_clip
+    except Exception as e:
+        print(f"剪切操作失败: {e}")
+        # 出错时返回空字符串
+        return ""
+    finally:
+        # 恢复原剪贴板内容（可选，根据需求决定是否需要恢复）
+        # 注意：如果注释掉下面这行，剪切后的内容将保留在剪贴板中
+        if old_clip is not None:
+            try:
+                pyperclip.copy(old_clip)
+            except Exception:
+                pass
+        # 移除无效的pass语句
 
 
 # 主要处理逻辑
 def Start():
     print("Start generate...")
-
-    text = cut_all_and_get_text()
+    
+    # 先尝试获取文本（剪切操作）
+    text = ""
+    try:
+        text = cut_all_and_get_text()
+    except Exception as e:
+        print(f"获取文本时出错: {e}")
+        text = ""
+    
+    # 然后尝试获取图像
     image = try_get_image()
 
     if text == "" and image is None:

@@ -8,4 +8,12 @@ pywin32>=311;sys_platform=='win32'
 
 # 键盘监听和剪贴板操作 - macOS
 pyobjc>=10.0;sys_platform=='darwin'
+
+# 键盘监听 - macOS和Linux
 pynput>=1.7.6;sys_platform=='darwin'
+
+# 添加Linux平台对keyboard库的支持
+keyboard>=0.13.5;sys_platform=='linux'
+
+# 剪贴板操作 - Linux
+PyQt5>=5.15.4;sys_platform=='linux'

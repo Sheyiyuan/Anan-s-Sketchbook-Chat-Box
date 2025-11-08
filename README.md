@@ -10,12 +10,13 @@
 
 ## 部署
 
-本项目支持仅 MacOS
-理论上支持 Windows，但是我只有理论。
+本项目支持仅 MacOS 和 Linux 系统。
+
+理论上支持 Windows 系统，但是我只有理论。
 
 本项目不提供字体文件和安安图片，需要你自己想办法加进来，分别命名为 `font.ttf`，`base.png` 和 `base_overlay.png`。
 其中 `font.ttf` 为字体文件，`base.png`为安安拿素描本的照片，`base_overlay.png` 为透明底的安安袖子, 用于防止文字和图片覆盖在袖子上方.
-如果分辨率不一样的安安图片, 需要修改`config.py`的 `TEXT_BOX_TOPLEFT` 和 `IMAGE_BOX_BOTTOMRIGHT`, 定义文本框的大小.
+如果分辨率不一样的安安图片, 需要修改 `config.py`的 `TEXT_BOX_TOPLEFT` 和 `IMAGE_BOX_BOTTOMRIGHT`, 定义文本框的大小.
 
 依赖库安装: `pip install -r requirements.txt `
 
@@ -33,7 +34,7 @@
 
 > 此处 MacOS 的测试环境为 MacOS Tahoe 26.0.1
 
-如果你在 MacOS 下使用需要使用管理员权限（sudo）运行。 
+如果你在 MacOS 下使用需要使用管理员权限（sudo）运行。
 
 另外，MacOS 由于安全限制，使用了与 Windows 系统下不同的实现。经测试在 QQ 等软件中修饰键和回车一起输入时回车会被吃掉，请自行设置其他快捷键。
 
@@ -45,7 +46,9 @@
 
 > 此处 Linux 的测试环境为 Arch Linux with Gnome (Wayland)
 
-写了一下午没有一个能跑动的版本，先咕咕了。等大佬来做吧（摆烂）。
+如果你在 Linux 下使用，需要以 root 用户身份运行。
+
+Linux 气球被简易长矛抓走了，不能图套图。
 
 ## 关于 Windows 系统的说明
 
@@ -53,7 +56,7 @@
 
 理论上是支持 Windows 的，但是我因为没有环境所以没有测试过，建议去用原项目，更新比这边快而且适配更好。
 
-## 下载后完整使用教程
+## MacOS 下载后完整使用教程
 
 - 隐私设置
 
@@ -91,4 +94,3 @@ sudo uv run main.py
 ```
 
 这里需要输入你电脑的开机密码，密码输入后不会显示，输往回车确认即可。
-

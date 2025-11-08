@@ -16,6 +16,8 @@ if current_os == 'Windows':
     from .windows_adapter import WindowsAdapter
 elif current_os == 'Darwin':  # macOS
     from .darwin_adapter import DarwinAdapter
+elif current_os == 'Linux':  # Linux
+    from .linux_adapter import LinuxAdapter
 
 def get_os_adapter() -> BaseOSAdapter:
     """根据当前操作系统返回相应的适配器实例
@@ -27,6 +29,8 @@ def get_os_adapter() -> BaseOSAdapter:
         return WindowsAdapter()
     elif current_os == 'Darwin':  # macOS
         return DarwinAdapter()
+    elif current_os == 'Linux':  # Linux
+        return LinuxAdapter()
     else:
         print(f"不支持的操作系统: {current_os}")
         sys.exit(1)

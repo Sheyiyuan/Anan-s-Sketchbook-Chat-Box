@@ -17,3 +17,9 @@ class BaseOSAdapter:
 
     def start_hotkey_listener(self, hotkey, start_func, block_hotkey=False):
         raise NotImplementedError("子类必须实现此方法")
+
+    def adapt_hotkey_for_linux(self, hotkey):
+        raise NotImplementedError("子类必须实现此方法")
+
+    def adapt_hotkey_for_macos(self, hotkey):
+        raise NotImplementedError("子类必须实现此方法")

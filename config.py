@@ -18,7 +18,7 @@
 #    - 修饰键：'ctrl'、'alt'、'shift'、'windows'
 #    - 控制键：'enter'、'space'、'tab'、'backspace'、'delete'、'esc'
 #    - 方向键：'up'、'down'、'left'、'right'
-HOTKEY= "enter"
+HOTKEY= "ctrl+."
 
 # 允许运行此程序的进程列表，只有当前最上层窗口属于这些进程时，热键才会生效
 # 例如: ["qq.exe", "weixin.exe"] 表示只在QQ和微信中生效
@@ -81,4 +81,4 @@ AUTO_PASTE_IMAGE= True
 
 # 生成图片后是否自动发送(模拟回车键输入), 只有开启自动黏贴才生效
 # 此值为布尔值, True 或 False
-AUTO_SEND_IMAGE= True
+AUTO_SEND_IMAGE= False

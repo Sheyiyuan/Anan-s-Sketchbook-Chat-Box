@@ -16,5 +16,8 @@ if current_os == 'Windows':
 elif current_os == 'Darwin':  # macOS
     from .darwin_adapter import DarwinAdapter
     __all__ = ['BaseOSAdapter', 'DarwinAdapter', 'get_os_adapter']
+elif current_os == 'Linux':  # Linux
+    from .linux_adapter import LinuxAdapter
+    __all__ = ['BaseOSAdapter', 'LinuxAdapter', 'get_os_adapter']
 else:
     __all__ = ['BaseOSAdapter', 'get_os_adapter']
