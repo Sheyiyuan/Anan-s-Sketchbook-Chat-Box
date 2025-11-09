@@ -1,8 +1,5 @@
 /.venv/
 **/__pycache__/
-base.png
-base_overlay.png
-font.ttf
 .idea/
 .vscode/
 .DS_Store
