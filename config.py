@@ -55,9 +55,21 @@ DELAY= 0.1
 # 此值为字符串, 代表相对main的相对路径
 FONT_FILE= "font.ttf"
 
+# 将差分表情导入，默认底图base.png
 # 使用底图的文件名, 需要自己导入
 # 此值为字符串, 代表相对main的相对路径
-BASEIMAGE_FILE= "base.png"
+BASEIMAGE_MAPPING = {
+    "#普通#": "BaseImages/base.png",
+    "#开心#": "BaseImages/开心.png",
+    "#生气#": "BaseImages/生气.png",
+    "#无语#": "BaseImages/无语.png",
+    "#脸红#": "BaseImages/脸红.png",
+    "#病娇#": "BaseImages/病娇.png"
+}
+
+# 使用底图的文件名, 需要自己导入
+# 此值为字符串, 代表相对main的相对路径
+BASEIMAGE_FILE= "BaseImages/base.png"
 
 # 文本框左上角坐标 (x, y), 同时适用于图片框
 # 此值为一个二元组, 例如 (100, 150), 单位像素, 图片的左上角记为 (0, 0)
@@ -69,7 +81,7 @@ IMAGE_BOX_BOTTOMRIGHT= (119+279, 450+175)
 
 # 置顶图层的文件名, 需要自己导入
 # 此值为字符串, 代表相对main的相对路径
-BASE_OVERLAY_FILE= "base_overlay.png"
+BASE_OVERLAY_FILE= "BaseImages/base_overlay.png"
 
 # 是否启用底图的置顶图层, 用于表现遮挡
 # 此值为布尔值, True 或 False

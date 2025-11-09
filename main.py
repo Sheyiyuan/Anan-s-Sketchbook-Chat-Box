@@ -6,11 +6,12 @@ import time  # 添加time模块导入
 from os_adapters import os_adapter
 
 # 导入配置和功能模块
-from config import DELAY, FONT_FILE, BASEIMAGE_FILE, AUTO_SEND_IMAGE, AUTO_PASTE_IMAGE, BLOCK_HOTKEY, HOTKEY, \
+from config import DELAY, BASEIMAGE_MAPPING, FONT_FILE, BASEIMAGE_FILE, AUTO_SEND_IMAGE, AUTO_PASTE_IMAGE, BLOCK_HOTKEY, HOTKEY, \
     SEND_HOTKEY, PASTE_HOTKEY, CUT_HOTKEY, SELECT_ALL_HOTKEY, TEXT_BOX_TOPLEFT, IMAGE_BOX_BOTTOMRIGHT, \
     BASE_OVERLAY_FILE, USE_BASE_OVERLAY
 from text_fit_draw import draw_text_auto
 from image_fit_paste import paste_image_auto
+current_image_file = BASEIMAGE_FILE
 
 # 检测当前操作系统
 current_os = platform.system()
@@ -104,6 +105,8 @@ def cut_all_and_get_text() -> str:
 
 # 主要处理逻辑
 def Start():
+    global current_image_file#保存上次使用差分
+
     print("Start generate...")
     
     # 先尝试获取文本（剪切操作）
@@ -128,7 +131,7 @@ def Start():
 
         try:
             png_bytes = paste_image_auto(
-                image_source=BASEIMAGE_FILE,
+                image_source=current_image_file,
                 image_overlay=BASE_OVERLAY_FILE if USE_BASE_OVERLAY else None,
                 top_left=TEXT_BOX_TOPLEFT,
                 bottom_right=IMAGE_BOX_BOTTOMRIGHT,
@@ -146,9 +149,16 @@ def Start():
     elif text != "":
         print("Get text: " + text)
 
+        # 查找发送内容是否包含更换差分指令#差分名#，如果有则更换差分并移除关键字
+        for keyword, img_file in BASEIMAGE_MAPPING.items():
+            if keyword in text:
+                current_image_file = img_file
+                text = text.replace(keyword, "").strip()
+                print(f"检测到关键词 '{keyword}'，使用底图: {current_image_file}")
+                break
         try:
             png_bytes = draw_text_auto(
-                image_source=BASEIMAGE_FILE,
+                image_source=current_image_file,
                 image_overlay=BASE_OVERLAY_FILE if USE_BASE_OVERLAY else None,
                 top_left=TEXT_BOX_TOPLEFT,
                 bottom_right=IMAGE_BOX_BOTTOMRIGHT,
