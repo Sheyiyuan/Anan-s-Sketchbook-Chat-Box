@@ -4,6 +4,8 @@
 
 这个项目是 [原项目](https://github.com/MarkCup-Official/Anan-s-Sketchbook-Chat-Box) 的 MacOS 和 Linux 支持版本，随缘更新，不保证功能和原项目同步。
 
+本项目用于电脑本地使用。如果你需要一个 API，可以使用另一分支 [Anan's Sketchbook API](https://github.com/SheyiyuanTan90/Anan-s-Sketchbook-API) 进行部署和二次开发。
+
 ## AI声明
 
 本项目基本上你看得到的的代码都由AI生成
