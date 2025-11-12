@@ -105,4 +105,4 @@ uv pip install -r requirements.txt
 sudo uv run main.py
 ```
 
-这里需要输入你电脑的开机密码，密码输入后不会显示，输往回车确认即可。
+这里需要输入你电脑的开机密码，密码输入后不会显示，输完回车确认即可。
